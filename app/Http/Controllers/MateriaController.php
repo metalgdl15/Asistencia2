@@ -12,9 +12,10 @@ class MateriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listado()
+    public function index()
     {
-        return view('materias.indexMaterias');
+        $materias = Materia::all();
+        return view('materias.indexMaterias', compact('materias'));
     }
 
     /**
@@ -35,7 +36,18 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        $materia = $request->materias;
+      
+      //dd($request->all());
+ 
+        $materia= new Materia();
+        $materia->materia = $request->input('materia');
+        $materia->seccion = $request->input('seccion');
+        $materia->crn = $request->crn;
+        $materia->salon = $request->salon;
+        $materia->save();
+      
+        return redirect()->route('materia.index');
+               //$materia = $request->materias;
     }
 
     /**

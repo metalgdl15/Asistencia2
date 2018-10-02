@@ -24,7 +24,7 @@ Route::get('/inicio', function (){
 });
 
 //Route::get('/materias','MateriaController@index');
-Route::get('/alumnos','alumnosController@index');
+/*Route::get('/alumnos','alumnosController@index');
 Route::get('/dependencias','dependenciasController@index');
 Route::get('/empleados','empleadosController@index');
 Route::get('/roles','rolesController@index');
@@ -35,8 +35,11 @@ Route::post('/materia/store', 'MateriaController@store');
 Route::get('/materia/show/{id}', 'MateriaController@show');
 Route::get('/materia/edit/{id}', 'MateriaController@edit');
 Route::post('/materia/update/{id}', 'MateriaController@update');
+
 Route::post('/materia/reporte-pdf', 'MateriaController@reportePdf');
-           
+*/
+Route::resource('materia', 'MateriaController');
+Route::resource('alumno', 'alumnoController');           
 
 /*Route::get('/materia/create', function(){
   return view('materias.formMateria');
