@@ -39,13 +39,17 @@ class MateriaController extends Controller
       
       //dd($request->all());
  
+        /*
         $materia= new Materia();
         $materia->materia = $request->input('materia');
         $materia->seccion = $request->input('seccion');
         $materia->crn = $request->crn;
         $materia->salon = $request->salon;
         $materia->save();
-      
+        */
+
+        Materia::create($request->all());
+        
         return redirect()->route('materia.index');
                //$materia = $request->materias;
     }
@@ -56,9 +60,11 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function show( $id)
+    public function show( Materia $materium /*$id*/)
     {
-        return view('materias.showMateria',compact('id'));
+        //$minMateria = Materia::find($id);
+        return view ('materias.showMateria')->with(['mat' =>$materium]);
+        //return view('materias.showMateria',compact('id'));
     }
 
     /**
@@ -90,8 +96,10 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materia $materia)
+    public function destroy(Materia $materium)
     {
         //
+        $materium->delete();
+        return redirect()->route('materia.index');  
     }
 }

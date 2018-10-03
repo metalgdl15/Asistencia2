@@ -1,34 +1,36 @@
-@extends ('layouts.app')
-@section('content')
+@extends ('layouts.tema')
+@section('contenido')
 <h1> Listado de materias </h1>
 
 <div class="row">
   <div class="col-md-12">
+    <table>
+
     <thead>
       <tr>
         <th> ID </th>
-        <th>Usuario</th>
-        <th>Nombre materia</th>
+        <th>Materia</th>
+        <th>Seccion</th>
         <th>CRN</th>
-        <th>Calandario</th>
-        <th>hora inicio</th>
         <th>Salon</th>
       </tr>
     </thead>
+
     <tbody>
-      @foreach($materias as $mat)
-        <tr>
-          <td>{{$mat->id}}</td>
-          <td>{{$mat->user_id}}</td>
-          <td>{{$mat->materia}}</td>
-          <td>{{$mat->crn}}</td>
-          <td>{{$mat->calendario}}</td>
-          <td>{{$mat->hora_inicio}}</td>
-          <td>{{$mat->salon}}</td>
-        </tr>
+     @foreach($materias as $mat)
+      <tr>
+        <td>
+          <a class="btn btn-sm bt-info btn-primary" href ="{{route('materia.show', $mat->id)}}"> {{$mat->id}} </a>
+        </td>
+        <td>{{$mat->materia}}</td>
+        <td>{{$mat->seccion}}</td>
+        <td>{{$mat->crn}}</td>
+        <td>{{$mat->salon}}</td>
+      </tr>
       @endforeach
     </tbody>
-    
+
+  </table>
   </div>
 </div>
 @endsection
