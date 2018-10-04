@@ -48,6 +48,8 @@ class MateriaController extends Controller
         $materia->save();
         */
 
+        $request->validate(['materia'=>'required|min:5', 'seccion' => 'required|max:5', 'crn'=>'required|integer', 'salon'=>'required|max:20']);
+
         Materia::create($request->all());
         
         return redirect()->route('materia.index');
@@ -73,9 +75,10 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Materia $materium)
     {
-        return view('materias.formEditMateria',compact('id'));
+        return view('materias.formMateria')->with(['materia' => $materium]);
+        //return view('materias.formEditMateria',compact('id'));
     }
 
     /**
@@ -85,9 +88,17 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Materia $materium)
     {
-        //
+        /*$materium->materia =$request->materia;
+        $materium->crn =$request->crn;
+        $materium->salon =$request->salon;
+        $materium->seccion =$request->seccion;
+        $materium->save();
+        */
+        Materia::where('id', $materium->id)->update($request->except('_token', '_method'));
+
+        return redirect()->route('materia.show', $materium->id);
     }
 
     /**
