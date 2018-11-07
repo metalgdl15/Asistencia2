@@ -18,7 +18,7 @@
     </thead>
 
     <tbody>
-     @foreach($materias as $mat)
+     @foreach($user->materias as $mat)
       <tr>
         <td>
           <a class="btn btn-sm bt-info btn-primary" href ="{{route('materia.show', $mat->id)}}"> {{$mat->id}} </a>
@@ -27,7 +27,7 @@
         <td>{{$mat->seccion}}</td>
         <td>{{$mat->crn}}</td>
         <td>{{$mat->salon}}</td>
-        <td>{{$mat->user->nombre}}</td>
+        <!--<td>{{$mat->user->name}}</td>-->
       </tr>
       @endforeach
     </tbody>

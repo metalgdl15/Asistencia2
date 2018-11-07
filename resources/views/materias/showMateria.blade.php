@@ -7,7 +7,7 @@
     <table>
     <thead>
       <tr>
-        <th> ID </th>
+        <th>ID </th>
         <th>MATERIA</th>
         <th>CRN</th>
         <th>Salon</th>
@@ -42,5 +42,29 @@
       <button type="submit" class="btn btn-danger">Eliminar</button>
     </form>
   </div>
+</div>
+
+
+
+<div>
+  <h1> listado de Alumnos </h1>
+    {!! Form::open (['route' => ['agregar', $mat->id]]) !!}
+      {!! Form::label('alumno', 'Alumnos') !!}
+      <!--<p>{{$mat->id}}</p>-->  
+      <select name="alumno">
+        @foreach($alumnos as $alumno)
+          <option value="{{$alumno->id}}"> {{ $alumno->Nombre}} </option>
+        @endforeach
+      </select>
+      <input type="submit" value="Aceptar" name="enviar">
+
+    {!! Form::close() !!}
+
+    <ul>
+      @foreach($mat->alumnos as $al)
+        <li>{{$al->Nombre}}</li>
+        
+      @endforeach
+    </ul>
 </div>
 @endsection

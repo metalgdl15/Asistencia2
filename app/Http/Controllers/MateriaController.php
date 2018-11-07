@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Materia;
+use App\User;
+use App\Alumno;
 use Illuminate\Http\Request;
 
 class MateriaController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,9 +45,11 @@ class MateriaController extends Controller
     {
       
       //dd($request->all());
- 
+        $request->validate(['materia'=>'required|min:5', 'seccion' => 'required|max:5', 'crn'=>'required|integer', 'salon'=>'required|max:20']);
+
         /*
         $materia= new Materia();
+        $materia->user_id = \Auth::id();
         $materia->materia = $request->input('materia');
         $materia->seccion = $request->input('seccion');
         $materia->crn = $request->crn;
@@ -48,9 +57,19 @@ class MateriaController extends Controller
         $materia->save();
         */
 
-        $request->validate(['materia'=>'required|min:5', 'seccion' => 'required|max:5', 'crn'=>'required|integer', 'salon'=>'required|max:20']);
+        //Guardar con relacion utilizando metodo save 
+        $materia = new Materia($request->all());
+
+        //obtenemos instancia (modelo) del usuario
+        $user = User::find(\Auth::id());
+
+        $user->materias()->save($materia);
+
+        /*$request->merge(['user_id' => \Auth::id()]);
+        //dd($request->all());
 
         Materia::create($request->all());
+        */
         
         return redirect()->route('materia.index');
                //$materia = $request->materias;
@@ -65,8 +84,11 @@ class MateriaController extends Controller
     public function show( Materia $materium /*$id*/)
     {
         //$minMateria = Materia::find($id);
-        return view ('materias.showMateria')->with(['mat' =>$materium]);
-        //return view('materias.showMateria',compact('id'));
+        //return view ('materias.showMateria')->with(['mat' =>$materium]);
+
+        $alumnos = Alumno::all();
+        $mat= $materium;
+        return view('materias.showMateria', compact('mat', 'alumnos'));
     }
 
     /**
@@ -112,5 +134,15 @@ class MateriaController extends Controller
         //
         $materium->delete();
         return redirect()->route('materia.index');  
+    }
+
+    public function AddAlumno (Request $request, $id){
+
+        $materia = Materia::find($id);
+        //$alumno = Alumno::find($request->alumnos);
+        //$alumno->materias()->attach($materia->id);
+        $materia->alumnos()->attach($request->alumno);
+        
+        return redirect()->back();
     }
 }

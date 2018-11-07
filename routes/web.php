@@ -40,6 +40,9 @@ Route::post('/materia/reporte-pdf', 'MateriaController@reportePdf');
 */
 Route::resource('materia', 'MateriaController');
 Route::resource('alumno', 'alumnoController');           
+Route::resource('user', 'UserController');
+Route::resource('alumno.materia','AlumnoMateriaController');
+Route::post('/materia/{id}','MateriaController@AddAlumno')->name('agregar');
 
 /*Route::get('/materia/create', function(){
   return view('materias.formMateria');
